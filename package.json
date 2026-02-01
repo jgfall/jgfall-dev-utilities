@@ -1,0 +1,63 @@
+{
+  "name": "@jgfall/dev-utilities",
+  "version": "1.0.0",
+  "description": "Comprehensive development utilities, components, and automation tools",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "test:coverage": "jest --coverage",
+    "test:components": "jest --testPathPattern=components",
+    "test:scripts": "jest --testPathPattern=scripts",
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
+    "lint:fix": "eslint . --ext .js,.jsx,.ts,.tsx --fix",
+    "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,css,scss,md}\"",
+    "build": "npm run build:components && npm run build:styles",
+    "build:components": "node scripts/build/build-components.js",
+    "build:styles": "node scripts/build/build-styles.js",
+    "docs": "node scripts/docs/generate-docs.js",
+    "examples": "node scripts/examples/run-examples.js",
+    "setup:react": "node scripts/setup/create-react-app.js",
+    "setup:static": "node scripts/setup/create-static-site.js",
+    "setup:api": "node scripts/setup/create-api-server.js",
+    "deploy:netlify": "node scripts/deployment/deploy-netlify.js",
+    "deploy:vercel": "node scripts/deployment/deploy-vercel.js",
+    "deploy:gh-pages": "node scripts/deployment/deploy-github-pages.js"
+  },
+  "keywords": [
+    "utilities",
+    "components",
+    "deployment",
+    "automation",
+    "templates",
+    "scaffolding",
+    "build-tools",
+    "ci-cd"
+  ],
+  "author": "Jackson Fall",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jgfall/jgfall-dev-utilities.git"
+  },
+  "dependencies": {
+    "axios": "^1.6.0",
+    "chalk": "^4.1.2",
+    "commander": "^11.0.0",
+    "dotenv": "^16.3.0",
+    "inquirer": "^8.2.5",
+    "ora": "^5.4.1"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.5.0",
+    "@types/node": "^20.0.0",
+    "eslint": "^8.50.0",
+    "jest": "^29.7.0",
+    "prettier": "^3.0.0",
+    "typescript": "^5.2.0"
+  },
+  "workspaces": [
+    "components/*",
+    "styles/*",
+    "utils/*"
+  ]
+}
