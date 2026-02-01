@@ -1,0 +1,203 @@
+// JGFall SCSS Mixins
+// Reusable style mixins
+
+@import 'variables';
+
+// ===== RESPONSIVE BREAKPOINTS =====
+
+@mixin jgf-responsive($breakpoint) {
+    @if map-has-key($jgf-breakpoints, $breakpoint) {
+        @media (min-width: map-get($jgf-breakpoints, $breakpoint)) {
+            @content;
+        }
+    } @else {
+        @warn "Unknown breakpoint: #{$breakpoint}";
+    }
+}
+
+// Mobile-first responsive
+@mixin jgf-mobile {
+    @media (max-width: 767px) {
+        @content;
+    }
+}
+
+@mixin jgf-tablet {
+    @media (min-width: 768px) and (max-width: 1023px) {
+        @content;
+    }
+}
+
+@mixin jgf-desktop {
+    @media (min-width: 1024px) {
+        @content;
+    }
+}
+
+// ===== FLEXBOX MIXINS =====
+
+@mixin jgf-flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@mixin jgf-flex-between {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+@mixin jgf-flex-column {
+    display: flex;
+    flex-direction: column;
+}
+
+// ===== CARD MIXIN =====
+
+@mixin jgf-card($padding: map-get($jgf-spacing, 'lg')) {
+    background: $jgf-white;
+    border-radius: map-get($jgf-radius, 'lg');
+    box-shadow: map-get($jgf-shadows, 'md');
+    padding: $padding;
+    transition: $jgf-transition-base;
+    
+    &:hover {
+        box-shadow: map-get($jgf-shadows, 'xl');
+        transform: translateY(-4px);
+    }
+}
+
+// ===== BUTTON MIXIN =====
+
+@mixin jgf-button($bg-color, $text-color: $jgf-white) {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.625rem 1.25rem;
+    background: $bg-color;
+    color: $text-color;
+    border: 2px solid $bg-color;
+    border-radius: map-get($jgf-radius, 'md');
+    font-weight: 600;
+    cursor: pointer;
+    transition: $jgf-transition-base;
+    
+    &:hover:not(:disabled) {
+        background: darken($bg-color, 10%);
+        border-color: darken($bg-color, 10%);
+        transform: translateY(-2px);
+        box-shadow: map-get($jgf-shadows, 'md');
+    }
+    
+    &:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+    }
+}
+
+// ===== TEXT UTILITIES =====
+
+@mixin jgf-text-truncate {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+@mixin jgf-text-clamp($lines: 2) {
+    display: -webkit-box;
+    -webkit-line-clamp: $lines;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+// ===== POSITION MIXINS =====
+
+@mixin jgf-absolute-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+@mixin jgf-absolute-cover {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+// ===== ASPECT RATIO =====
+
+@mixin jgf-aspect-ratio($width, $height) {
+    aspect-ratio: #{$width} / #{$height};
+    
+    @supports not (aspect-ratio: 1 / 1) {
+        &::before {
+            content: '';
+            float: left;
+            padding-top: calc(#{$height} / #{$width} * 100%);
+        }
+        
+        &::after {
+            content: '';
+            display: block;
+            clear: both;
+        }
+    }
+}
+
+// ===== SCROLLBAR STYLING =====
+
+@mixin jgf-custom-scrollbar($width: 8px, $track-color: $jgf-gray-100, $thumb-color: $jgf-gray-400) {
+    &::-webkit-scrollbar {
+        width: $width;
+        height: $width;
+    }
+    
+    &::-webkit-scrollbar-track {
+        background: $track-color;
+        border-radius: map-get($jgf-radius, 'sm');
+    }
+    
+    &::-webkit-scrollbar-thumb {
+        background: $thumb-color;
+        border-radius: map-get($jgf-radius, 'sm');
+        
+        &:hover {
+            background: darken($thumb-color, 10%);
+        }
+    }
+}
+
+// ===== GRADIENT MIXIN =====
+
+@mixin jgf-gradient($direction, $color-start, $color-end) {
+    background: linear-gradient($direction, $color-start, $color-end);
+}
+
+// ===== HOVER LIFT EFFECT =====
+
+@mixin jgf-hover-lift($distance: -4px) {
+    transition: $jgf-transition-base;
+    
+    &:hover {
+        transform: translateY($distance);
+        box-shadow: map-get($jgf-shadows, 'lg');
+    }
+}
+
+// ===== FOCUS OUTLINE =====
+
+@mixin jgf-focus-outline($color: $jgf-primary) {
+    &:focus {
+        outline: 2px solid $color;
+        outline-offset: 2px;
+    }
+    
+    &:focus:not(:focus-visible) {
+        outline: none;
+    }
+}
